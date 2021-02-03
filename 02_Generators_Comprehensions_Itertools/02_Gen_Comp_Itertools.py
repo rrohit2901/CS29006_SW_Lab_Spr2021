@@ -10,7 +10,7 @@ for i in range(1, 10, 2):
 # Use of 'range' function
 # start: 0 (included, default)
 # stop: 10 (excluded)
-# step: 2 (default)
+# step: 1 (default)
 for i in range(5):
     print(i)
 # prints: 0.. 1.. 2.. 3.. 4
