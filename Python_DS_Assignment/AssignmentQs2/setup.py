@@ -11,7 +11,7 @@ setuptools.setup(
     description="Package for object detection.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    # url="https://github.com/pypa/sampleproject",
+    url="https://github.com/rrohit2901/CS29006_SW_Lab_Spr2021/tree/main/Python_DS_Assignment/AssignmentQs2",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
