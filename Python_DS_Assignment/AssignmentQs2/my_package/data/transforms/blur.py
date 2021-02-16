@@ -1,5 +1,6 @@
 #Imports
-
+from PIL import Image, ImageFilter
+import numpy as np
 
 class BlurImage(object):
     '''
@@ -13,6 +14,11 @@ class BlurImage(object):
         '''
 
         # Write your code here
+        try:
+            self.radius = radius
+            assert isinstance(self.radius, int)
+        except AssertionError:
+            print("Invalid argument type....")
         
 
     def __call__(self, image):
@@ -25,5 +31,7 @@ class BlurImage(object):
         '''
 
         # Write your code here
+        image = Image.fromarray(image)
+        fin_image = image.filter(ImageFilter.GaussianBlur(radius = self.radius))
+        return np.array(fin_image)
         
-

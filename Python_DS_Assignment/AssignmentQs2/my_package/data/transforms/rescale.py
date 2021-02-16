@@ -1,5 +1,7 @@
 #Imports
 
+from PIL import Image
+import numpy as np
 
 class RescaleImage(object):
     '''
@@ -15,6 +17,12 @@ class RescaleImage(object):
         '''
 
         # Write your code here
+        try:
+            assert isinstance(output_size,int) or isinstance(output_size,tuple)
+            self.output_size = output_size
+        except AssertionError:
+            print("Invalid input to constructor......")
+
 
     def __call__(self, image):
         '''
@@ -28,3 +36,20 @@ class RescaleImage(object):
         '''
 
         # Write your code here
+        currDim = image.shape
+        image = Image.fromarray(image)
+        h = w = None
+        if isinstance(self.output_size,int):
+            h0 = currDim[0]
+            w0 = currDim[1]
+            if h0<w0:
+                h = self.output_size
+                w = int(h * (w0/h0))
+            else:
+                w = self.output_size
+                h = int(w * (h0/w0))
+        else:
+            h,w = self.output_size
+        fin_image = image.resize((h,w))
+        fin_image.show()
+        return np.array(fin_image)

@@ -17,6 +17,7 @@ def experiment(annotation_file, detector, transforms, outputs):
 
     #Create the instance of the dataset.
     
+    
 
     #Iterate over all data items.
     

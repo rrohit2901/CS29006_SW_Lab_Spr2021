@@ -1,5 +1,6 @@
 #Imports
-
+import numpy as np
+from PIL import Image
 
 class RotateImage(object):
     '''
@@ -13,6 +14,7 @@ class RotateImage(object):
         '''
         
         # Write your code here
+        self.angle = degrees
 
     def __call__(self, sample):
         '''
@@ -24,3 +26,8 @@ class RotateImage(object):
         '''
 
         # Write your code here
+        image = Image.fromarray(sample)
+        fin_image = image.rotate(self.angle, expand = 1)
+        fin_image.show()
+        return np.array(fin_image)
+        

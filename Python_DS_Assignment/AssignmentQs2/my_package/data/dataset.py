@@ -1,5 +1,7 @@
 #Imports
-
+import json
+from PIL import Image
+import numpy as np
 
 class Dataset(object):
     '''
@@ -13,13 +15,18 @@ class Dataset(object):
             transforms: list of transforms (class instances)
                         For instance, [<class 'RandomCrop'>, <class 'Rotate'>]
         '''
-
-        
+        self.annotation_file = annotation_file
+        self.transforms = transforms
+        self.data = []
+        with open(self.annotation_file) as f:
+            for line in f:
+                self.data.append(json.loads(line))
 
     def __len__(self):
         '''
             return the number of data points in the dataset
         '''
+        return len(self.data)
 
         
 
@@ -45,5 +52,23 @@ class Dataset(object):
             4. Perform the desired transformations.
             5. Return the transformed image and annotations as specified.
         '''
-
+        curr_dict = {}
+        curr_data = self.data[idx]
+        curr_dir = '/home/rrohit2901/Software_lab_assns/Assn3/AssignmentQs2/data/'
+        curr_img = Image.open(curr_dir + curr_data['img_fn'])
+        gt_bboxes = [[] for i in range(0, len(curr_data['bboxes']))]
+        for i, box in enumerate(curr_data['bboxes']):
+            gt_bboxes[i].append(box['category']) 
+            gt_bboxes[i] += box['bbox']
+        gt_bboxes = np.array(gt_bboxes)
+        if self.transforms is not None:
+            for transform in self.transforms:
+                curr_img = transform(curr_img)
+        curr_dict['image'] = curr_img
+        curr_dict['gt_bboxes'] = gt_bboxes
+        return curr_dict
         
+
+fil_path  ='/home/rrohit2901/Software_lab_assns/Assn3/AssignmentQs2/data/annotations.jsonl'
+data = Dataset(fil_path,)
+print(data.__getitem__(0))
